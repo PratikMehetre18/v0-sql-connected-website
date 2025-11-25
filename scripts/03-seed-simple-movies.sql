@@ -1,0 +1,16 @@
+-- Add 12 dummy movies with different genres for quick testing
+INSERT INTO videos (title, description, thumbnail_url, video_url, duration_seconds, genre, release_date, rating, view_count, created_by, created_at)
+VALUES
+('The Last Adventure', 'An epic action-packed adventure across the globe', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4', 7200, 'Action', '2024-01-15', 8.5, 5420, 1, CURRENT_TIMESTAMP),
+('Rising Stars', 'A dramatic tale of ambition and dreams', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ElephantsDream.mp4', 5400, 'Drama', '2024-02-10', 9.2, 3890, 1, CURRENT_TIMESTAMP),
+('Laugh Out Loud', 'The funniest comedy of the year', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4', 4800, 'Comedy', '2024-01-20', 8.8, 6120, 1, CURRENT_TIMESTAMP),
+('Explosion Zone', 'High-octane action with incredible stunts', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4', 6300, 'Action', '2024-03-05', 8.9, 7845, 1, CURRENT_TIMESTAMP),
+('Heartbreak Hotel', 'A touching emotional journey', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ElephantsDream.mp4', 5100, 'Drama', '2024-02-28', 9.1, 4560, 1, CURRENT_TIMESTAMP),
+('Comedy Gold', 'Stand-up and sketches that will make you laugh', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4', 3900, 'Comedy', '2024-03-12', 8.6, 5230, 1, CURRENT_TIMESTAMP),
+('Secret Agent Files', 'Spy thriller with amazing twists', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4', 6900, 'Action', '2024-01-08', 8.7, 6740, 1, CURRENT_TIMESTAMP),
+('Love in Paris', 'A romantic drama set in the City of Light', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ElephantsDream.mp4', 5200, 'Drama', '2024-02-14', 8.4, 3120, 1, CURRENT_TIMESTAMP),
+('Hilarious Moments', 'Collection of the funniest scenes', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4', 4200, 'Comedy', '2024-03-20', 8.3, 4890, 1, CURRENT_TIMESTAMP),
+('Battle Royale', 'Epic action-packed battle movie', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4', 7500, 'Action', '2024-01-25', 9.0, 8920, 1, CURRENT_TIMESTAMP),
+('Soul Search', 'A deep drama about finding yourself', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ElephantsDream.mp4', 5800, 'Drama', '2024-03-01', 8.5, 2450, 1, CURRENT_TIMESTAMP),
+('Punchline Paradise', 'Non-stop comedy entertainment', '/placeholder.svg?height=400&width=300', 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4', 4100, 'Comedy', '2024-03-15', 8.7, 5670, 1, CURRENT_TIMESTAMP)
+ON CONFLICT DO NOTHING;
