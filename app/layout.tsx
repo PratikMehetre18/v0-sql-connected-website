@@ -1,4 +1,3 @@
-import UserGreeting from "@/components/Usergreeting";
 
 import type React from "react"
 // ... existing code ...
@@ -43,7 +42,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans antialiased`}>
         {children}
-      <usergreeting/>
         <Analytics />
       </body>
     </html>
