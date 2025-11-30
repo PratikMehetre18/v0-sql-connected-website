@@ -1,12 +1,34 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
-import { Menu, X, Search } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X, Search, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser))
+      } catch (e) {
+        console.error("[v0] Failed to parse user data")
+      }
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    setUser(null)
+    window.location.href = "/"
+  }
+
+  if (!mounted) return null
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-b from-black/80 to-transparent">
@@ -37,11 +59,23 @@ export function Header() {
                 <Search className="w-5 h-5" />
               </Button>
             </Link>
-            <Link href="/auth/login" className="hidden sm:inline-flex">
-              <Button className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
-                Sign In
+
+            {user ? (
+              <Button
+                onClick={handleLogout}
+                variant="ghost"
+                className="hidden sm:inline-flex text-white hover:text-red-500 gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
               </Button>
-            </Link>
+            ) : (
+              <Link href="/auth/login" className="hidden sm:inline-flex">
+                <Button className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
+                  Sign In
+                </Button>
+              </Link>
+            )}
 
             {/* Mobile menu button */}
             <button className="md:hidden text-white" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -62,11 +96,21 @@ export function Header() {
             <Link href="/watchlist" className="text-white hover:text-red-500">
               Watchlist
             </Link>
-            <Link href="/auth/login" className="w-full">
-              <Button className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
-                Sign In
+            {user ? (
+              <Button
+                onClick={handleLogout}
+                className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
               </Button>
-            </Link>
+            ) : (
+              <Link href="/auth/login" className="w-full">
+                <Button className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </nav>
         )}
       </div>

@@ -20,7 +20,14 @@ export function VideoGrid({ genre, title }: { genre?: string; title: string }) {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const url = genre ? `/api/videos?genre=${genre}&limit=12` : "/api/trending?limit=12"
+        let url: string
+        if (title === "Top 10") {
+          url = "/api/top-10"
+        } else if (genre) {
+          url = `/api/videos?genre=${genre}&limit=12`
+        } else {
+          url = "/api/trending?limit=12"
+        }
         const response = await fetch(url)
         const data = await response.json()
         setVideos(data)
@@ -32,7 +39,7 @@ export function VideoGrid({ genre, title }: { genre?: string; title: string }) {
     }
 
     fetchVideos()
-  }, [genre])
+  }, [genre, title])
 
   const displayVideos = videos.length > 0 ? videos : getDummyVideos()
 
