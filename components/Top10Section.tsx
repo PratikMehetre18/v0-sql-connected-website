@@ -17,8 +17,7 @@ export default function Top10Section() {
   useEffect(() => {
     async function loadTop10() {
       try {
-        const res = await fetch("/api/videos");
-
+    const res = await fetch("/api/top-10");
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`);
         }
