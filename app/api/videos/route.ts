@@ -10,13 +10,13 @@ export async function GET(request: NextRequest) {
 
     let videos
     if (genre) {
-      videos = await query(`SELECT * FROM videos WHERE genre = $1 ORDER BY rating DESC LIMIT $2 OFFSET $3`, [
+      videos = await query(`SELECT * FROM movies WHERE genre = $1 ORDER BY rating DESC LIMIT $2 OFFSET $3`, [
         genre,
         limit,
         offset,
       ])
     } else {
-      videos = await query(`SELECT * FROM videos ORDER BY created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
+      videos = await query(`SELECT * FROM movies ORDER BY created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
     }
 
     return NextResponse.json(videos)
