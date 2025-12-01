@@ -7,4 +7,5 @@ export async function GET() {
     console.error("API Error:", error)
     return NextResponse.json({ error: "Failed to fetch top 10 videos" }, { status: 500 })
   }
+      return NextResponse.json(videos);
 }
