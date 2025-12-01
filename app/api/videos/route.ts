@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
         offset,
       ])
     } else {
-      videos = await query(`SELECT * FROM movies ORDER BY created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
+      videos = await query(`SELECT * FROM videos ORDER BY created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
     }
 
     return NextResponse.json(videos)
