@@ -1,4 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { neon } from "@neondatabase/serverless"
+
+const sql = neon(process.env.DATABASE_URL as string)
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,6 +19,17 @@ export async function POST(request: NextRequest) {
       full_name: fullName || username,
     }
 
+    // ✅ Log signup event into login_events table (Neon DB)
+    try {
+      await sql`
+        INSERT INTO login_events (email, event_type)
+        VALUES (${email}, 'signup')
+      `
+    } catch (dbError) {
+      console.error("[v0] Failed to log signup event:", dbError)
+      // we don't block signup if logging fails
+    }
+
     const response = NextResponse.json({
       success: true,
       user: {
@@ -30,7 +44,7 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60,
+      maxAge: 7 * 24 * 60 * 60, // 7 days
     })
 
     return response

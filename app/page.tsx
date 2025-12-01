@@ -1,5 +1,6 @@
 "use client"
 
+import Top10Section from "@/components/Top10Section"
 import { Header } from "@/components/header"
 import { VideoGrid } from "@/components/video-grid"
 import { Button } from "@/components/ui/button"
@@ -28,13 +29,21 @@ export default function Home() {
         <div className="relative z-10 text-center space-y-4">
           {user ? (
             <>
-              <h1 className="text-5xl md:text-6xl font-bold text-white text-balance">Hello {user.username}!</h1>
-              <p className="text-xl text-gray-300 text-balance">What would you like to watch?</p>
+              <h1 className="text-5xl md:text-6xl font-bold text-white text-balance">
+                Hello {user.username}!
+              </h1>
+              <p className="text-xl text-gray-300 text-balance">
+                What would you like to watch?
+              </p>
             </>
           ) : (
             <>
-              <h1 className="text-5xl md:text-6xl font-bold text-white text-balance">Watch Everything</h1>
-              <p className="text-xl text-gray-300 text-balance">Thousands of movies, TV shows, and more</p>
+              <h1 className="text-5xl md:text-6xl font-bold text-white text-balance">
+                Watch Everything
+              </h1>
+              <p className="text-xl text-gray-300 text-balance">
+                Thousands of movies, TV shows, and more
+              </p>
             </>
           )}
           <div className="flex gap-4 justify-center">
@@ -44,7 +53,10 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/search">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 h-12 bg-transparent">
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 px-8 h-12 bg-transparent"
+              >
                 Browse All
               </Button>
             </Link>
@@ -52,9 +64,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Top 10 Videos */}
+      {/* Top 10 Videos – now powered by DB titles */}
       <section className="container mx-auto px-4 py-12">
-        <VideoGrid title="Top 10" />
+        <Top10Section />
       </section>
 
       {/* Trending Videos */}

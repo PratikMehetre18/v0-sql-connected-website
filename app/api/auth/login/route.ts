@@ -1,4 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { neon } from "@neondatabase/serverless"
+
+const sql = neon(process.env.DATABASE_URL as string)
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +18,17 @@ export async function POST(request: NextRequest) {
       username: email.split("@")[0],
       fullName: email,
       isAdmin: false,
+    }
+
+    // ✅ Log login event into login_events table (Neon DB)
+    try {
+      await sql`
+        INSERT INTO login_events (email, event_type)
+        VALUES (${email}, 'login')
+      `
+    } catch (dbError) {
+      console.error("[v0] Failed to log login event:", dbError)
+      // don't block login if logging fails
     }
 
     const response = NextResponse.json({
@@ -36,3 +50,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Failed to login" }, { status: 500 })
   }
 }
+
+
