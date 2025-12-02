@@ -1,25 +1,37 @@
-import { query } from "@/lib/db"
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
+import { neon } from "@neondatabase/serverless"
+
+const sql = neon(process.env.DATABASE_URL as string)
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const limit = Number.parseInt(searchParams.get("limit") || "20")
-    const offset = Number.parseInt(searchParams.get("offset") || "0")
+    const { searchParams } = new URL(request.url)
     const genre = searchParams.get("genre")
+    const limitParam = searchParams.get("limit")
+    const limit = limitParam ? Number(limitParam) : 50
 
-    let videos
+    let rows
+
     if (genre) {
-      videos = await query(`SELECT * FROM movies WHERE genre = $1 ORDER BY rating DESC LIMIT $2 OFFSET $3`, [
-        genre,
-        limit,
-        offset,
-      ])
+      // 🔁 USE videos (NOT movies)
+      rows = await sql`
+        SELECT id, title, description, genre, thumbnail_url, rating, view_count, created_at
+        FROM videos
+        WHERE genre = ${genre}
+        ORDER BY created_at DESC
+        LIMIT ${limit}
+      `
     } else {
-      videos = await query(`SELECT * FROM movies ORDER BY created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
+      // 🔁 USE videos (NOT movies)
+      rows = await sql`
+        SELECT id, title, description, genre, thumbnail_url, rating, view_count, created_at
+        FROM videos
+        ORDER BY created_at DESC
+        LIMIT ${limit}
+      `
     }
 
-    return NextResponse.json(videos)
+    return NextResponse.json(rows)
   } catch (error) {
     console.error("API Error:", error)
     return NextResponse.json({ error: "Failed to fetch videos" }, { status: 500 })
