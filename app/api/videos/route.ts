@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     let rows
 
     if (genre) {
-      // 🔁 USE videos (NOT movies)
+      // fetch by genre from videos table
       rows = await sql`
         SELECT id, title, description, genre, thumbnail_url, rating, view_count, created_at
         FROM videos
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         LIMIT ${limit}
       `
     } else {
-      // 🔁 USE videos (NOT movies)
+      // fetch all videos
       rows = await sql`
         SELECT id, title, description, genre, thumbnail_url, rating, view_count, created_at
         FROM videos
